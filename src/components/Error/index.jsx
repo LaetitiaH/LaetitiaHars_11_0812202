@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import colors from "../../utils/colors";
-import height from "../../utils/variables";
+import variables from "../../utils/variables";
 
 const ErrorContainer = styled.div`
   display: flex;
@@ -9,12 +9,16 @@ const ErrorContainer = styled.div`
   justify-content: space-evenly;
   align-items: center;
   color: ${colors.primary};
-  height: calc(100vh - ${height.footer}px - ${height.headerSmall}px);
+  height: calc(
+    100vh - ${variables.height.footer}px - ${variables.height.headerSmall}px
+  );
   padding: 0 36px 40px;
   box-sizing: border-box;
 
   @media (min-width: 1024px) {
-    height: calc(100vh - ${height.footer}px - ${height.headerLarge}px);
+    height: calc(
+      100vh - ${variables.height.footer}px - ${variables.height.headerLarge}px
+    );
   }
 `;
 
