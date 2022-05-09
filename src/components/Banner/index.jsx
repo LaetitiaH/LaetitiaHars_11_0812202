@@ -5,11 +5,6 @@ const BannerContainer = styled.div`
   height: ${({ height }) => height};
   box-sizing: border-box;
   position: relative;
-  margin: 0 20px;
-
-  @media (min-width: 1024px) {
-    margin: 0 100px;
-  }
 `;
 
 const BannerImg = styled.img`

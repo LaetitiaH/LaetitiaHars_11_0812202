@@ -7,7 +7,6 @@ const RentalCardContainer = styled.div`
   min-width: 335px;
   box-sizing: border-box;
   border-radius: 10px;
-  flex: 1;
 
   @media (min-width: 1024px) {
     height: 340px;
