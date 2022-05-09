@@ -5,6 +5,8 @@ const Text = styled.div`
   color: ${colors.primary};
   font-size: 24px;
   align-self: center;
+  text-align: center;
+  width: 100%;
 `;
 
 const RefreshError = () => {
