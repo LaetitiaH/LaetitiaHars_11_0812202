@@ -5,7 +5,11 @@ import arrowDown from "../../assets/down_arrow.png";
 import { useState } from "react";
 import colors from "../../utils/colors";
 
-const ExpansionPanelHeader = styled.div`
+const ExpansionPanelContainer = styled.div`
+  flex: 1;
+`;
+
+const ExpansionPanelHeader = styled.button`
   height: ${({ height }) => height};
   width: 100%;
   background-color: #ff6060;
@@ -15,6 +19,8 @@ const ExpansionPanelHeader = styled.div`
   align-items: center;
   border-radius: 5px;
   justify-content: space-between;
+  border: none;
+  cursor: pointer;
 
   @media (min-width: 1024px) {
     font-size: 24px;
@@ -29,14 +35,10 @@ const Title = styled.span`
   }
 `;
 
-const ArrowButton = styled.button`
+const ArrowContainer = styled.div`
   height: 8px;
   width: 15px;
   margin-right: 10px;
-  background-color: unset;
-  border: unset;
-  padding: 0;
-  cursor: pointer;
   display: flex;
 
   @media (min-width: 1024px) {
@@ -52,6 +54,7 @@ const Arrow = styled.img`
 `;
 
 const ExpansionPanelContent = styled.div`
+  min-height: ${({ height }) => height};
   width: 100%;
   background-color: #f6f6f6;
   color: ${colors.primary};
@@ -61,23 +64,65 @@ const ExpansionPanelContent = styled.div`
   box-sizing: border-box;
 
   @media (min-width: 1024px) {
-    font-size: 24px;
+    font-size: ${({ fontSize }) => fontSize};
+    padding: 30px 11px 10px;
   }
 `;
 
-const ExpansionPanel = ({ height, title, text }) => {
+const ExpansionPanelText = styled.p`
+  margin: 0;
+  line-height: 142.6%;
+`;
+
+const ExpansionPanelList = styled.ul`
+  margin: 0;
+  padding: 0;
+`;
+
+const ExpansionPanelItem = styled.li`
+  list-style-type: none;
+  height: 18px;
+
+  @media (min-width: 1024px) {
+    height: 37px;
+  }
+`;
+
+const ExpansionPanel = ({
+  height,
+  title,
+  text,
+  list,
+  heightContent,
+  fontSize,
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div>
-      <ExpansionPanelHeader height={height}>
+    <ExpansionPanelContainer>
+      <ExpansionPanelHeader
+        height={height}
+        type="button"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
         <Title>{title}</Title>
-        <ArrowButton onClick={() => setIsExpanded(!isExpanded)} type="button">
+        <ArrowContainer>
           <Arrow src={isExpanded ? arrowUp : arrowDown} />
-        </ArrowButton>
+        </ArrowContainer>
       </ExpansionPanelHeader>
-      {isExpanded && <ExpansionPanelContent>{text}</ExpansionPanelContent>}
-    </div>
+      {isExpanded && (
+        <ExpansionPanelContent height={heightContent} fontSize={fontSize}>
+          {text && <ExpansionPanelText>{text}</ExpansionPanelText>}
+          {list && (
+            <ExpansionPanelList>
+              {list.map((item, index) => (
+                <ExpansionPanelItem key={index}>{item}</ExpansionPanelItem>
+              ))}
+            </ExpansionPanelList>
+          )}
+        </ExpansionPanelContent>
+      )}
+    </ExpansionPanelContainer>
   );
 };
 
@@ -85,10 +130,15 @@ export default ExpansionPanel;
 
 ExpansionPanel.propTypes = {
   height: PropTypes.string,
+  heightContent: PropTypes.string,
+  fontSize: PropTypes.string,
   title: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
+  list: PropTypes.arrayOf(PropTypes.string),
 };
 
 ExpansionPanel.defaultProps = {
   height: "30px",
+  heightContent: "max-content",
+  fontSize: "24px",
 };
